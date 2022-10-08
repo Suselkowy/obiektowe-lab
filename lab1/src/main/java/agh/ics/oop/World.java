@@ -4,30 +4,24 @@ import java.util.Arrays;
 
 public class World {
     public static void main(String[] args){
-        System.out.println("System wystartował");
-        Direction[] newArgs =  convertToDiraction(args);
+        System.out.println("Start");
+        Direction[] newArgs =  convertToDirection(args);
         run(newArgs);
-        System.out.println("System zakończył działanie");
+        System.out.println("Stop");
     }
     static void run(Direction[] args){
-        for (int i = 0; i < args.length; i++) {
-            if(i > 0)
-            {
-                System.out.print(", ");
-            }
-
-            String message =switch (args[i]) {
+        for(Direction arg : args){
+            String message = switch (arg) {
                 case FORWARD -> "Zwierzak idzie do przodu";
                 case BACKWARD ->  "Zwierzak idzie do tyłu";
                 case RIGHT -> "Zwierzak skręca w prawo";
                 case LEFT ->  "Zwierzak skręca w lewo" ;
             };
-            System.out.print(message);
+            System.out.print(message +"\n");
         }
-        System.out.print("\n");
     }
 
-    static Direction[] convertToDiraction(String[] args){
+    static Direction[] convertToDirection(String[] args){
         Direction[] directions= new Direction[args.length];
         int i = 0;
         for (String arg:args) {
