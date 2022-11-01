@@ -3,7 +3,7 @@ package agh.ics.oop;
 import java.util.Arrays;
 
 public class OptionsParser {
-    static public MoveDirection[] parse(String[] stringDirections){
+    public MoveDirection[] parse(String[] stringDirections){
         MoveDirection[] moveDirections= new MoveDirection[stringDirections.length];
         int i = 0;
         for (String direction: stringDirections) {

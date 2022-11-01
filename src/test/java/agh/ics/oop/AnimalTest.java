@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AnimalTest {
 
     public Animal testAnimal(String[] args){
-        Animal animal = new Animal();
-        MoveDirection[] moveDirections = OptionsParser.parse(args);
+        Animal animal = new Animal(new RectangularMap(4,4), new Vector2d(2, 2));
+        MoveDirection[] moveDirections = new OptionsParser().parse(args);
         for (MoveDirection direction: moveDirections) {
             animal.move(direction);
         }

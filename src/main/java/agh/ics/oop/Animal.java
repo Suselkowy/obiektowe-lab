@@ -7,9 +7,23 @@ public class Animal {
     private final Vector2d topLeft = new Vector2d(4,4);
     private final Vector2d bottomRight = new Vector2d(0,0 );
 
+    private final IWorldMap map;
+    public Animal(IWorldMap map){
+        this.map = map;
+    }
+
+    public Animal(IWorldMap map, Vector2d initialPosition){
+        this.map = map;
+        this.position = initialPosition;
+    }
+
     public String toString() {
-        return String.format("Zwierzak znajduje sie na pozycji %s i jest zwrócony na %s",
-                position.toString(), orientation.toString());
+        return switch(orientation){
+            case NORTH -> "N";
+            case WEST -> "W";
+            case EAST -> "E";
+            case SOUTH -> "S";
+        };
     }
 
     public boolean isAt(Vector2d position){
@@ -25,9 +39,13 @@ public class Animal {
             default -> {
                 Vector2d newPosition = (direction.equals(MoveDirection.FORWARD)) ?
                         position.add(orientation.toUnitVector()) : position.add(orientation.toUnitVector().opposite());
-                if (bottomRight.precedes(newPosition) && topLeft.follows(newPosition))
+                if (map.canMoveTo(newPosition))
                     position = newPosition;
             }
         }
+    }
+
+    public Vector2d getPosition(){
+        return this.position;
     }
 }
