@@ -29,19 +29,36 @@ public class GrassField extends AbstractWorldMap{
             do{
                 newPosition = new Vector2d(randomNum(), randomNum());
             }while (this.objectAt(newPosition) != null);
-            elements.add(new Grass(newPosition));
+
+            elements.put(newPosition, new Grass(newPosition));
         }
     }
 
+    @Override
+    public boolean place(Animal animal) {
+        boolean grassDeleted = false;
+        if(objectAt(animal.getPosition()) instanceof Grass){
+            elements.remove(animal.getPosition());
+            grassDeleted = true;
+        }
+        boolean isAdded = super.place(animal);
+        if(grassDeleted){
+            placeGrass(1);
+        }
+        return isAdded;
+    }
 
     @Override
     public Vector2d[] printLimit() {
         int[] dynamicUpperRight = {0,0};
         int[] dynamicLowerLeft = {upperRight.x, upperRight.y};
-        for (IMapElement curObj: elements) {
-            Vector2d curPos = curObj.getPosition();
-            comparePositions(curPos, dynamicUpperRight, dynamicLowerLeft);
+        for (Vector2d key: elements.keySet()) {
+            comparePositions(key, dynamicUpperRight, dynamicLowerLeft);
         }
+//        for (IMapElement curObj: elements) {
+//            Vector2d curPos = curObj.getPosition();
+//            comparePositions(curPos, dynamicUpperRight, dynamicLowerLeft);
+//        }
         return new Vector2d[]{new Vector2d(dynamicLowerLeft[0], dynamicLowerLeft[1]), new Vector2d(dynamicUpperRight[0], dynamicUpperRight[1])};
     }
 
