@@ -29,9 +29,10 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     }
 
     @Override
-    public boolean place(Animal animal) {
+    public boolean place(Animal animal) throws IllegalArgumentException{
         if(!canMoveTo(animal.getPosition())){
-            return false;
+            String errorCause = isOccupied(animal.getPosition()) ? "- field already occupied" : "- out of bounds";
+            throw new IllegalArgumentException("Cannot place animal on place " +animal.getPosition().toString() +errorCause);
         }
 
         elements.put(animal.getPosition(), animal);

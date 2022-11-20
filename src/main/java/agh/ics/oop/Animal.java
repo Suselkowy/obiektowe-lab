@@ -46,10 +46,7 @@ public class Animal implements IMapElement{
                         position.add(orientation.toUnitVector()) : position.add(orientation.toUnitVector().opposite());
                 if (map.canMoveTo(newPosition)){
                     Vector2d oldPosition = this.position;
-                    boolean isFieldWithGrass = false;
-                    if(map.objectAt(newPosition) instanceof GrassField){
-                        isFieldWithGrass = true;
-                    }
+                    boolean isFieldWithGrass = map.objectAt(newPosition) instanceof Grass;
                     position = newPosition;
                     positionChanged(oldPosition, newPosition);
                     if(isFieldWithGrass){

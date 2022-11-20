@@ -9,12 +9,14 @@ public class GrassField extends AbstractWorldMap{
     private int seed = 12345;
 
     private final double limit;
+    private MapBoundary boundary;
     private Random randomGenerator;
     public GrassField(int countGrass){
         super(Integer.MAX_VALUE,Integer.MAX_VALUE);
 
         this.limit = sqrt(countGrass*10);
-        this.randomGenerator = new Random(this.seed);
+        this.randomGenerator = new Random(seed);
+        this.boundary = new MapBoundary();
 
         placeGrass(countGrass);
     }
@@ -31,6 +33,7 @@ public class GrassField extends AbstractWorldMap{
             }while (this.objectAt(newPosition) != null);
 
             elements.put(newPosition, new Grass(newPosition));
+            boundary.addPosition(newPosition);
         }
     }
 
@@ -50,16 +53,19 @@ public class GrassField extends AbstractWorldMap{
 
     @Override
     public Vector2d[] printLimit() {
-        int[] dynamicUpperRight = {0,0};
-        int[] dynamicLowerLeft = {upperRight.x, upperRight.y};
-        for (Vector2d key: elements.keySet()) {
-            comparePositions(key, dynamicUpperRight, dynamicLowerLeft);
-        }
+
+//        int[] dynamicUpperRight = {0,0};
+//        int[] dynamicLowerLeft = {upperRight.x, upperRight.y};
+//        for (Vector2d key: elements.keySet()) {
+//            comparePositions(key, dynamicUpperRight, dynamicLowerLeft);
+//        }
 //        for (IMapElement curObj: elements) {
 //            Vector2d curPos = curObj.getPosition();
 //            comparePositions(curPos, dynamicUpperRight, dynamicLowerLeft);
 //        }
-        return new Vector2d[]{new Vector2d(dynamicLowerLeft[0], dynamicLowerLeft[1]), new Vector2d(dynamicUpperRight[0], dynamicUpperRight[1])};
+
+        //return new Vector2d[]{new Vector2d(dynamicLowerLeft[0], dynamicLowerLeft[1]), new Vector2d(dynamicUpperRight[0], dynamicUpperRight[1])};
+        return new Vector2d[]{new Vector2d(boundary.xCoords.first().x, boundary.yCoords.first().y), new Vector2d(boundary.xCoords.last().x, boundary.yCoords.last().y)};
     }
 
     public boolean deleteGrass(Vector2d position){
@@ -86,6 +92,11 @@ public class GrassField extends AbstractWorldMap{
         }
     }
 
+    @Override
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition){
+        super.positionChanged(oldPosition, newPosition);
+        boundary.positionChanged(oldPosition, newPosition);
+    }
 
 }
 

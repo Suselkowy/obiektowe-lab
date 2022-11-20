@@ -7,7 +7,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GrassFieldTest {
-    public List<Animal> testEngine(String[] args, IWorldMap map, Vector2d[] positions){
+    public List<Animal> testEngine(String[] args, IWorldMap map, Vector2d[] positions) throws IllegalArgumentException{
         MoveDirection[] directions = new OptionsParser().parse(args);
         SimulationEngine engine = new SimulationEngine(directions, map, positions);
         engine.run();
@@ -55,13 +55,28 @@ public class GrassFieldTest {
     public  void voidDynamicSizeTest(){
         IWorldMap map = new GrassField(10);
 
-        String[] input1 = new String[]{        "r", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f",};
+        String[] input1 = new String[]{"r", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f"};
         Vector2d[] positions = { new Vector2d(2,2)};
         List<Animal> ans = testEngine(input1,map, positions);
 
         Vector2d[] printLimit = ((GrassField)map ).printLimit();
         assertEquals(printLimit[0], new Vector2d(1,1));
         assertEquals(printLimit[1], new Vector2d(17,10));
+
+    }
+
+    @Test
+    public void exceptionTest(){
+        IWorldMap map = new GrassField(10);
+
+        String[] input1 = new String[]{ "r", "12wadwdasd",};
+        Vector2d[] positions = { new Vector2d(2,2)};
+        try{
+            List<Animal> ans = testEngine(input1,map, positions);
+        }catch (IllegalArgumentException e){
+            assertEquals(e.getMessage(), "12wadwdasd is not legal move specification");
+        }
+
 
     }
 

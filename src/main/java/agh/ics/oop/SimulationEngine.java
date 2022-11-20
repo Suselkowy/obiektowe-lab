@@ -10,7 +10,7 @@ public class SimulationEngine implements IEngine{
     private int animalCount;
     private List<Animal> animals;
 
-    public SimulationEngine(MoveDirection[] directions,IWorldMap map, Vector2d[] positions){
+    public SimulationEngine(MoveDirection[] directions,IWorldMap map, Vector2d[] positions) throws IllegalArgumentException{
         this.animalCount = 0;
         this.animals = new LinkedList<Animal>();
         for ( Vector2d position: positions) {

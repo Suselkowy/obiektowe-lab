@@ -56,11 +56,32 @@ public class MapAndEngineTest {
         IWorldMap map = new RectangularMap(4, 4);
 
         String[] input1 = new String[]{"f", "f"};
-        Vector2d[] positions = { new Vector2d(2,2), new Vector2d(5,5) };
+        Vector2d[] positions = { new Vector2d(2,2)};
         List<Animal> ans = testEngine(input1,map, positions);
 
         assertEquals(ans.get(0).getPosition(), new Vector2d(2,4));
         assertEquals(ans.get(0).toString(), "N");
+    }
+    @Test
+    public void placeTestException(){
+        IWorldMap map = new RectangularMap(4, 4);
+
+        String[] input1 = new String[]{"f", "f"};
+        Vector2d[] positions = { new Vector2d(2,2), new Vector2d(5,5) };
+        try{
+            List<Animal> ans = testEngine(input1,map, positions);
+        }catch (IllegalArgumentException e){
+            assertEquals(e.getMessage(), "Cannot place animal on place (5,5)- out of bounds");
+        }
+
+
+        String[] input2 = new String[]{"f", "f"};
+        Vector2d[] position2 = { new Vector2d(2,2), new Vector2d(2,2) };
+        try{
+            List<Animal> ans = testEngine(input2,map, position2);
+        }catch (IllegalArgumentException e){
+            assertEquals(e.getMessage(), "Cannot place animal on place (2,2)- field already occupied");
+        }
     }
 
     @Test
@@ -68,7 +89,7 @@ public class MapAndEngineTest {
         IWorldMap map = new RectangularMap(4, 4);
 
         String[] input1 = new String[]{"f", "f"};
-        Vector2d[] positions = { new Vector2d(2,2), new Vector2d(5,5) };
+        Vector2d[] positions = { new Vector2d(2,2)};
         List<Animal> ans = testEngine(input1,map, positions);
 
         assertEquals(map.objectAt(new Vector2d(2,4)), ans.get(0));
