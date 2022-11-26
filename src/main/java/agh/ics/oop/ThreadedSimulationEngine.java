@@ -1,12 +1,9 @@
 package agh.ics.oop;
 
-import agh.ics.oop.gui.App;
-
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Observer;
 
-public class SimulationEngine implements IEngine, Runnable{
+public class ThreadedSimulationEngine implements IEngine, Runnable{
 
     private MoveDirection[] directions;
     private IWorldMap map;
@@ -15,7 +12,7 @@ public class SimulationEngine implements IEngine, Runnable{
     private Integer moveDelay = 300;
     private IAnimalMoveObserver observer;
 
-    public SimulationEngine(MoveDirection[] directions,IWorldMap map, Vector2d[] positions, IAnimalMoveObserver obs) throws IllegalArgumentException{
+    public ThreadedSimulationEngine(IWorldMap map, Vector2d[] positions, IAnimalMoveObserver obs) throws IllegalArgumentException{
         this.animalCount = 0;
         this.animals = new LinkedList<Animal>();
         for ( Vector2d position: positions) {
@@ -25,9 +22,12 @@ public class SimulationEngine implements IEngine, Runnable{
                 animals.add(currAnimal);
             };
         }
-        this.directions = directions;
         this.map = map;
         this.observer = obs;
+    }
+
+    public void setDirections(String[] directions) {
+        this.directions = new OptionsParser().parse(directions);
     }
 
     @Override
@@ -45,10 +45,5 @@ public class SimulationEngine implements IEngine, Runnable{
             }
 
         }
-    }
-
-    // Only for testing puroposes
-    public List<Animal> getAnimalsToTest(){
-        return animals;
     }
 }

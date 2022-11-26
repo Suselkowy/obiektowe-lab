@@ -22,7 +22,7 @@ public class GrassFieldTest {
         Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
         List<Animal> ans = testEngine(input1,map, positions);
 
-        assertEquals(ans.get(0).getPosition(), new Vector2d(2,0));
+        assertEquals(ans.get(0).getPosition(), new Vector2d(2,-1));
         assertEquals(ans.get(0).toString(), "S");
 
         assertEquals(ans.get(1).getPosition(), new Vector2d(3,7));

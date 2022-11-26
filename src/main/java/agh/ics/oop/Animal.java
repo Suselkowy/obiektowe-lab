@@ -35,6 +35,16 @@ public class Animal implements IMapElement{
         return position.equals(this.position);
     }
 
+    @Override
+    public String getResourcePath() {
+        return switch(orientation){
+            case NORTH -> "src/main/resources/up.png";
+            case WEST -> "src/main/resources/left.png";
+            case EAST -> "src/main/resources/right.png";
+            case SOUTH -> "src/main/resources/down.png";
+        };
+    }
+
     public void move(MoveDirection direction){
         switch (direction) {
             case LEFT -> orientation = orientation.previous();

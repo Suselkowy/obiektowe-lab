@@ -7,6 +7,7 @@ import static java.lang.Math.sqrt;
 public class GrassField extends AbstractWorldMap{
     //seed for testing
     private int seed = 12345;
+    //private int seed = 12346;
 
     private final double limit;
     private MapBoundary boundary;
@@ -35,6 +36,11 @@ public class GrassField extends AbstractWorldMap{
             elements.put(newPosition, new Grass(newPosition));
             boundary.addPosition(newPosition);
         }
+    }
+
+    @Override
+    public boolean canMoveTo(Vector2d position) {
+        return (!isOccupied(position) || objectAt(position) instanceof Grass);
     }
 
     @Override

@@ -6,6 +6,7 @@ public interface IMapElement {
 
     boolean isAt(Vector2d position);
 
+    String getResourcePath();
 }
 
 //Można by było rozważyc dodanie klasy AbstractWorldMapElement ponieważ dwie klasy elementów maja funkcje ktore definiowane sa w taki sam sposób.
